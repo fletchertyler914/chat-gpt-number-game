@@ -4,15 +4,21 @@ import { PromptRequestProps } from './api/prompt';
 
 export const Index = () => {
   const [promptText, setPromptText] = useState('start game');
+  const [loading, setLoading] = useState(false);
   const [init, setInit] = useState(false);
   const [messages, setMessages] = useState([]);
 
   const submitPrompt = useCallback(async () => {
+    setLoading(true);
+
     const prompt = { User: promptText };
     const body: PromptRequestProps = {
       prompt,
       messages,
     };
+
+    setPromptText('');
+    setMessages([...messages, prompt]);
 
     if (!init) {
       body.init = true;
@@ -27,15 +33,19 @@ export const Index = () => {
       body: JSON.stringify(body),
     })
       .then((res) => res.json())
-      .then((responseMessages: any[]) => {
-        setMessages(responseMessages);
-        setPromptText('');
+      .then((responseMessages) => {
+        const _messages = Array.isArray(responseMessages)
+          ? responseMessages
+          : [
+              ...messages,
+              { Game: 'Something went wrong, lets restart this game.' },
+            ];
+        setMessages(_messages);
+        setLoading(false);
       });
   }, [init, messages, promptText]);
 
   useEffect(() => {
-    console.log('sss', document.getElementById(`${messages.length}`));
-
     window.scrollTo({
       top: document.getElementById(`${messages.length}`)?.offsetTop,
       behavior: 'smooth',
@@ -61,6 +71,14 @@ export const Index = () => {
               />
             );
           })}
+          {loading && (
+            <ChatBubble
+              key="loading"
+              loading={true}
+              index={messages.length + 1}
+              isUser={false}
+            />
+          )}
         </div>
       </div>
       <div className="h-20 w-full flex items-center justify-between px-2 py-4">
@@ -70,6 +88,11 @@ export const Index = () => {
           value={promptText}
           className="input input-lg	input-bordered w-full"
           onChange={(event) => setPromptText(event.target.value)}
+          onKeyDown={(evt) => {
+            if (evt.key === 'Enter') {
+              submitPrompt();
+            }
+          }}
         />
 
         <button type="button" className="w-20" onClick={submitPrompt}>
