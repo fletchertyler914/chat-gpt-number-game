@@ -58,7 +58,7 @@ export const Index = () => {
         <p className="flex self-center mt-10">
           Type &quot;start game&quot; to begin:
         </p>
-        <div className="p-10 flex flex-col gap-8">
+        <div className="p-4 flex flex-col gap-8">
           {messages?.map((message, index) => {
             const parsedMessage = Object.values(message)[0] as string;
             const isUser = (Object.keys(message)[0] as string) === 'User';
