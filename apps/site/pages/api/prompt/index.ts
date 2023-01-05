@@ -50,8 +50,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           (_res) => {
             const stripped = _res.data.choices;
             const message = JSON.parse(stripped[0].text);
-            // console.log('Response: ', message, _messages.concat(message));
-            console.log('Response: ', stripped, message);
             res.status(200).send(_messages.concat(message));
           },
           (err) => res.status(500).send(err)
