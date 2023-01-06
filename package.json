@@ -6,6 +6,7 @@
   "private": true,
   "dependencies": {
     "@nrwl/next": "15.4.4",
+    "@vercel/edge": "^0.2.1",
     "core-js": "^3.6.5",
     "daisyui": "^2.46.1",
     "next": "13.0.0",
@@ -25,6 +26,8 @@
     "@nrwl/react": "15.4.4",
     "@nrwl/web": "15.4.4",
     "@nrwl/workspace": "15.4.4",
+    "@swc/core": "^1.2.173",
+    "@swc/jest": "0.2.20",
     "@testing-library/react": "13.4.0",
     "@types/jest": "28.1.1",
     "@types/node": "16.11.7",

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ChatBubble } from '../components/ChatBubble';
-import { PromptRequestProps } from './api/prompt';
+import { PromptRequestProps } from './api/prompt/index';
 
 export const Index = () => {
   const [promptText, setPromptText] = useState('start game');

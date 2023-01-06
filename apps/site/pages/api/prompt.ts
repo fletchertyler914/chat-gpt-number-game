@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { Configuration, OpenAIApi } from 'openai';
-import { DEFAULT_PROMPT } from './utils';
+import { DEFAULT_PROMPT } from '@chat-gpt-number-game/utils';
 
 export type PromptRequestProps = {
   messages: { [key: string]: any }[];
