@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ChatBubble } from '../components/ChatBubble';
+import { ChatBubble } from '@chat-gpt-number-game/ui';
 import { PromptRequestProps } from './api/prompt';
 
 export const Index = () => {

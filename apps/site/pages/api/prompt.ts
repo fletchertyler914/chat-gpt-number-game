@@ -20,6 +20,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   } = req.body as PromptRequestProps;
   const isUser = (Object.keys(prompt)[0] as string) === 'User';
 
+  console.log('Prompt Req: ', isUser, req.body, req.headers);
+
   if (isUser) {
     const config = new Configuration({
       apiKey: process.env.OPENAI_API_KEY,
@@ -32,12 +34,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       `\n\n${_messages.map((message) => JSON.stringify(message)).join('\n\n')}`
     );
 
-    console.log('Prompt: ', messages, messages.join('\n\n'), _prompt);
+    const models = await openai.listModels().then((res) => res.data);
+
+    console.log('Prompt: ', models, messages, messages.join('\n\n'), _prompt);
 
     try {
       await openai
         .createCompletion({
-          model: 'text-davinci-003',
+          model: 'text-davinci-003', // gpt-3.5-turbo
           prompt: _prompt,
           temperature: 0.7,
           max_tokens: 256,
