@@ -9,6 +9,7 @@
     "@vercel/edge": "^0.2.1",
     "core-js": "^3.6.5",
     "daisyui": "^2.46.1",
+    "langchain": "^0.0.44",
     "next": "13.0.0",
     "openai": "^3.2.1",
     "react": "18.2.0",

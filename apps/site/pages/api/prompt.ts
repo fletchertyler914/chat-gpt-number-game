@@ -34,26 +34,21 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       `\n\n${_messages.map((message) => JSON.stringify(message)).join('\n\n')}`
     );
 
-    const models = await openai.listModels().then((res) => res.data);
-
-    console.log('Prompt: ', models, messages, messages.join('\n\n'), _prompt);
+    console.log('Prompt: ', messages, messages.join('\n\n'), _prompt);
 
     try {
       await openai
-        .createCompletion({
-          model: 'text-davinci-003', // gpt-3.5-turbo
-          prompt: _prompt,
+        .createChatCompletion({
+          model: ' gpt-3.5-turbo',
+          messages: _messages,
           temperature: 0.7,
           max_tokens: 256,
-          top_p: 1,
-          frequency_penalty: 0,
-          presence_penalty: 0,
           stop: ['User: ', '}  { "User"', '{ "User"'],
         })
         .then(
           (_res) => {
             const stripped = _res.data.choices;
-            const message = JSON.parse(stripped[0].text);
+            const message = JSON.parse(stripped[0].message.content);
             res.status(200).send(_messages.concat(message));
           },
           (err) => res.status(500).send(err)
