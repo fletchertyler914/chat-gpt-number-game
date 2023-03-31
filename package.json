@@ -7,14 +7,17 @@
   "dependencies": {
     "@nrwl/next": "15.4.4",
     "@vercel/edge": "^0.2.1",
+    "color": "^4.2.3",
     "core-js": "^3.6.5",
     "daisyui": "^2.46.1",
     "langchain": "^0.0.44",
     "next": "13.0.0",
     "openai": "^3.2.1",
+    "randomcolor": "^0.6.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "regenerator-runtime": "0.13.7",
+    "theme-change": "^2.5.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {

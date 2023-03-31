@@ -17,13 +17,16 @@ export interface MoodPallet {
   };
 }
 
-export interface AgentExecutorRequest extends NextApiRequest {
-  body: {
-    colorKeys: string[];
-    mood: string;
-    verbose?: boolean;
-  };
+export interface AgentExecutorRequestBody {
+  colorKeys: string[];
+  mood: string;
+  verbose?: boolean;
 }
+
+export interface AgentExecutorRequest extends NextApiRequest {
+  body: AgentExecutorRequestBody;
+}
+
 export default async function handler(
   req: AgentExecutorRequest,
   res: NextApiResponse

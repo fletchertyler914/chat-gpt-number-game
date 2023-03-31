@@ -55,17 +55,17 @@
     "_id": "929a336d-d315-438b-8ed7-3f1d523cb4e0",
     "colId": "history",
     "containerId": "",
-    "name": "http://192.168.1.181:3000/api/test",
+    "name": "Get Mood Pallet",
     "url": "http://192.168.1.181:3000/api/mood-pallet",
     "method": "GET",
     "sortNum": 0,
     "created": "2023-03-31T04:03:59.493Z",
-    "modified": "2023-03-31T07:36:03.479Z",
+    "modified": "2023-03-31T14:56:32.260Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"colorKeys\": [\n    \"primary\",\n    \"secondary\",\n    \"accent\",\n    \"neutral\",\n    \"base-100\",\n    \"info\",\n    \"success\",\n    \"warning\",\n    \"error\"\n  ],\n  \"mood\": \"dirty socks everywhere!\",\n  \"verbose\": false\n}",
+      "raw": "{\n  \"colorKeys\": [\n    \"primary\",\n    \"secondary\",\n    \"accent\",\n    \"neutral\",\n    \"base-100\",\n    \"info\",\n    \"success\",\n    \"warning\",\n    \"error\"\n  ],\n  \"mood\": \"Sweet spring flowers growing on a grassy knoll.\",\n  \"verbose\": true\n}",
       "form": []
     },
     "tests": []

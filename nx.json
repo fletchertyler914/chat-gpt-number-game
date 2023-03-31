@@ -1,6 +1,7 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "npmScope": "chat-gpt-number-game",
+  "defaultProject": "site",
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/nx-cloud",
