@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@chat-gpt-number-game/context": ["libs/context/src/index.ts"],
       "@chat-gpt-number-game/ui": ["libs/ui/src/index.ts"],
       "@chat-gpt-number-game/utils": ["libs/utils/src/index.ts"]
     }

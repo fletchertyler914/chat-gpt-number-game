@@ -6,6 +6,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 export interface MoodPalletResponse {
   moodPallet: MoodPallet;
   theme: { [key: string]: string };
+  colorScheme?: string;
 }
 
 export interface MoodPallet {
@@ -37,11 +38,15 @@ export default async function handler(
 
   const outputFormat = `
 {
-    [mood]: {
+    {mood}: {
         "{colorKey}": {
             "value": "{hex-color}",
-            "reason": "I chose this color for {color-key} because {reason}. "
+            "reason": "I chose this color for {colorKey} because {reason}. "
         },
+        "colorSchema": {
+            "value": 'light' | 'dark',
+            "reason": "I chose this color schema because {reason}. "
+        }
     },
 }
   `;
@@ -52,7 +57,9 @@ export default async function handler(
     'What are the mood descriptors in the last output?',
     `Return a javascript object in the following format: ${outputFormat}. The object's mood key is ${mood}. The hex color values should be in the format '#000000'. There should be ${
       colorKeys.length
-    } entries in the object, and the keys are ${colorKeys.join(',')}.`,
+    } entries in the object, and the keys are named ${colorKeys.join(
+      ','
+    )}. At the end of the mood object colorKeys, add a colorKey named 'colorScheme' with a value of 'light' or 'dark', choosing the more apprpriate value based on the mood, along with the reason. Be sure to make sure all of the colors in the theme are accessible, have good contrast, and generally appear well together on a screen.`,
   ];
 
   const results = [];
@@ -73,7 +80,7 @@ export default async function handler(
   for (const input of inputs) results.push(await executor.call({ input }));
 
   const moodPallet: MoodPallet = results[results.length - 1].output;
-
+  const sanitizedMood = mood.toLowerCase().split(' ').join('-');
   const theme = Object.entries(moodPallet[mood]).reduce(
     (acc, [colorKey, { value }]) => {
       if (colorKey && colorKeys.includes(colorKey)) acc[colorKey] = value;
@@ -82,7 +89,13 @@ export default async function handler(
     {}
   );
 
-  console.log('Got new theme ', { moodPallet, theme });
+  const response: MoodPalletResponse = {
+    moodPallet,
+    theme,
+    colorScheme: moodPallet[mood].colorScheme.value,
+  };
 
-  res.status(200).send({ moodPallet, theme } as MoodPalletResponse);
+  console.log('Got new theme ', response, sanitizedMood);
+
+  res.status(200).send(response);
 }

@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@chat-gpt-number-game/context';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 
@@ -10,7 +11,9 @@ function CustomApp({ Component, pageProps }: AppProps) {
         <title>Welcome to site!</title>
       </Head>
       <main className="app h-full w-full">
-        <Component {...pageProps} />
+        <ThemeProvider>
+          <Component {...pageProps} />
+        </ThemeProvider>
       </main>
     </>
   );
