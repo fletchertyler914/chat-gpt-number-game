@@ -5,6 +5,7 @@
   "scripts": {},
   "private": true,
   "dependencies": {
+    "@microsoft/fetch-event-source": "^2.0.1",
     "@nrwl/next": "15.4.4",
     "@vercel/edge": "^0.2.1",
     "color": "^4.2.3",

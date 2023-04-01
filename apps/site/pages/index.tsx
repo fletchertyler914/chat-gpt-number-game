@@ -9,8 +9,8 @@ import {
   generateThemeFromColors,
   mapThemeColors,
   requestMoodPallet,
-  sanitizeString,
 } from '@chat-gpt-number-game/utils';
+import { EventSourceMessage } from '@chat-gpt-number-game/modals';
 
 export const Index = () => {
   const [mood, setMood] = useState('');
@@ -18,6 +18,10 @@ export const Index = () => {
     MoodPalletResponse | undefined
   >();
   const [loading, setLoading] = useState(false);
+
+  const [serverMessages, setServerMessages] = useState<EventSourceMessage[]>(
+    []
+  );
 
   const { setDataTheme } = useTheme();
 
@@ -62,9 +66,40 @@ export const Index = () => {
 
   const submitPrompt = useCallback(async () => {
     setLoading(true);
-    const moodPallet = await requestMoodPallet(mood);
-    setMoodPallet(moodPallet);
-    setLoading(false);
+
+    const onOpen = async (response: Response) => {
+      if (response.ok && response.status === 200) {
+        console.log('Connection made ', response);
+      } else if (
+        response.status >= 400 &&
+        response.status < 500 &&
+        response.status !== 429
+      ) {
+        console.log('Client side error ', response);
+      }
+    };
+
+    const onclose = () => {
+      console.log('Connection closed by the server');
+    };
+
+    const onmessage = async (event) => {
+      const eventData: EventSourceMessage = JSON.parse(event.data);
+      console.log('Message Recieved:', eventData);
+      if (eventData.lastMessage) {
+        const _moodPallet: MoodPalletResponse = JSON.parse(eventData.message);
+        setMoodPallet(_moodPallet);
+        setLoading(false);
+      } else {
+        setServerMessages((prev) => [...prev, eventData]);
+      }
+    };
+
+    const onerror = (err) => {
+      console.log('There was an error from server', err);
+    };
+
+    requestMoodPallet(mood, true, onOpen, onclose, onmessage, onerror);
   }, [mood]);
 
   return (
@@ -108,7 +143,7 @@ export const Index = () => {
                 className="input input-primary input-md md:input-lg	input-bordered w-full max-w-sm"
                 onChange={(event) => {
                   if (event.target.value && !moodPallet) {
-                    setMood(sanitizeString(event.target.value.toLowerCase()));
+                    setMood(event.target.value);
                   } else {
                     // clear the mood
                     setMood('light');
@@ -149,9 +184,21 @@ export const Index = () => {
           <div className="flex flex-col justify-center items-center">
             <h2 className="px-2 pt-2 pb-8 text-md text-center">
               AI is generating your mood pallet...
-              <br />
-              Live progress coming soon!
             </h2>
+
+            <div>
+              {serverMessages.map((message, index) => (
+                <div
+                  key={index}
+                  className="px-2 pb-2 text-sm text-center flex flex-col justify-center items-center"
+                >
+                  <h3 className="py-4 text-md">Thought:</h3>
+                  <span className="text-sm text-gray-500">
+                    {message.message}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>

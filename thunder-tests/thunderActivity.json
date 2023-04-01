@@ -60,8 +60,18 @@
     "method": "POST",
     "sortNum": 0,
     "created": "2023-03-31T04:03:59.493Z",
-    "modified": "2023-04-01T07:29:32.910Z",
-    "headers": [],
+    "modified": "2023-04-01T19:04:09.342Z",
+    "headers": [
+      {
+        "name": "Accept",
+        "value": "text/event-stream"
+      },
+      {
+        "name": "User-Agent",
+        "value": "Thunder Client (https://www.thunderclient.com)",
+        "isDisabled": true
+      }
+    ],
     "params": [],
     "body": {
       "type": "json",

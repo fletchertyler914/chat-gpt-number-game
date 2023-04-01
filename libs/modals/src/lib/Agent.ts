@@ -22,3 +22,9 @@ export interface AgentExecutorRequestBody {
 export interface AgentExecutorRequest extends NextApiRequest {
   body: AgentExecutorRequestBody;
 }
+
+export interface EventSourceMessage {
+  message: string;
+  id: number;
+  lastMessage: boolean;
+}

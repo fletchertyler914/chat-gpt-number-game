@@ -5,6 +5,10 @@ import {
 import { ThemeColor } from '@chat-gpt-number-game/ui';
 import { COLOR_MAP, REQUIRED_COLOR_KEYS } from './constants';
 import { default as Color } from 'color';
+import {
+  EventSourceMessage,
+  fetchEventSource,
+} from '@microsoft/fetch-event-source';
 
 export const mapThemeColors = (theme: { [key: string]: string }) => {
   const themeColors: ThemeColor[] = [];
@@ -24,20 +28,35 @@ export const mapThemeColors = (theme: { [key: string]: string }) => {
 export const sanitizeString = (str: string) =>
   str.replace(/[^a-zA-Z0-9\s]/g, ' ').replace(/\s+/g, '-');
 
-export const requestMoodPallet = async (mood: string, verbose?: boolean) => {
+export const requestMoodPallet = async (
+  mood: string,
+  verbose?: boolean,
+  onopen?: (response: Response) => Promise<void>,
+  onclose?: (() => void) | undefined,
+  onmessage?: ((ev: EventSourceMessage) => void) | undefined,
+  onerror?: ((ev: EventSourceMessage) => void) | undefined
+) => {
   const body: AgentExecutorRequestBody = {
     colorKeys: REQUIRED_COLOR_KEYS,
     mood,
     verbose: verbose ?? false,
   };
 
-  return await fetch('api/mood-pallet', {
+  const ctrl = new AbortController();
+
+  await fetchEventSource('api/mood-pallet', {
     method: 'POST',
     headers: {
+      Accept: 'text/event-stream',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
-  }).then((res) => res.json() as Promise<MoodPalletResponse>);
+    onopen,
+    onclose,
+    onmessage,
+    onerror,
+    signal: ctrl.signal,
+  });
 };
 /*
     COLOR HELPERS
@@ -119,6 +138,7 @@ export const generateThemeFromColors = (
     .filter((item) => (item ? REQUIRED_COLOR_KEYS.includes(item.name) : false))
     .map((color: ThemeColor) => {
       const hslValue = Color(color.value).hsl().array();
+      // todo: account for dark mode
       return {
         ...color,
         value: `${hslValue[0]} ${hslValue[1]}% ${hslValue[2]}%`,
