@@ -57,15 +57,34 @@
     "containerId": "",
     "name": "Get Mood Pallet",
     "url": "http://192.168.1.181:3000/api/mood-pallet",
-    "method": "GET",
+    "method": "POST",
     "sortNum": 0,
     "created": "2023-03-31T04:03:59.493Z",
-    "modified": "2023-03-31T22:20:09.340Z",
+    "modified": "2023-04-01T07:29:32.910Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"colorKeys\": [\n    \"primary\",\n    \"secondary\",\n    \"accent\",\n    \"neutral\",\n    \"base-100\",\n    \"info\",\n    \"success\",\n    \"warning\",\n    \"error\"\n  ],\n  \"mood\": \"Sweet spring flowers growing on a grassy knoll.\",\n  \"verbose\": true\n}",
+      "raw": "{\n  \"colorKeys\": [\n    \"primary\",\n    \"secondary\",\n    \"accent\",\n    \"neutral\",\n    \"base-100\",\n    \"info\",\n    \"success\",\n    \"warning\",\n    \"error\"\n  ],\n  \"mood\": \"deep glow red light district\",\n  \"verbose\": true\n}\n",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "5f5920bd-df16-4fce-8324-d5316e1544df",
+    "colId": "history",
+    "containerId": "",
+    "name": "Emotion Wheel",
+    "url": "http://192.168.1.181:3000/api/emotion-wheel",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2023-03-31T04:03:59.493Z",
+    "modified": "2023-04-01T03:27:27.473Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"colorKeys\": [\n    \"primary\",\n    \"secondary\",\n    \"accent\",\n    \"neutral\",\n    \"base-100\",\n    \"info\",\n    \"success\",\n    \"warning\",\n    \"error\"\n  ],\n  \"mood\": \"Sweet spring flowers growing on a grassy knoll.\",\n  \"verbose\": true\n}\n",
       "form": []
     },
     "tests": []
