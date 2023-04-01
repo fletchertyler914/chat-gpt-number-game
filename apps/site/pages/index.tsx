@@ -73,7 +73,7 @@ export const Index = () => {
         <h2 className="px-2 py-4 text-xl font-medium">mood(pallet)</h2>
       </div>
 
-      <div className="bg-transparent glass">
+      <div className="bg-transparent">
         <hr className="mb-8" />
         {loading ? (
           <div className="flex flex-col justify-center items-center">
@@ -105,7 +105,6 @@ export const Index = () => {
               <input
                 type="text"
                 placeholder="Type here"
-                value={mood}
                 className="input input-primary input-md md:input-lg	input-bordered w-full max-w-sm"
                 onChange={(event) => {
                   if (event.target.value && !moodPallet) {
@@ -142,10 +141,10 @@ export const Index = () => {
         )}
 
         {!loading ? (
-          <>
+          <div className="glass">
             <hr className="my-8" />
             <Preview />
-          </>
+          </div>
         ) : (
           <div className="flex flex-col justify-center items-center">
             <h2 className="px-2 pt-2 pb-8 text-md text-center">
